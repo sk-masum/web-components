@@ -28,14 +28,6 @@ export class SkSidebarMenu {
     /** Enable horizontal swipe-to-close gesture on touch devices */
     @Prop() swipeToClose: boolean = true;
 
-    @State() dragOffset: number = 0;
-    @State() isDragging: boolean = false;
-
-    private panelEl?: HTMLElement;
-    private touchStartX = 0;
-    private touchStartY = 0;
-    private touchStartTime = 0;
-    private swipeLocked: 'horizontal' | 'vertical' | null = null;
     /** Color theme: 'dark', 'light', or 'auto' (follows system preference) */
     @Prop({ reflect: true }) theme: 'dark' | 'light' | 'auto' = 'auto';
 
@@ -81,11 +73,48 @@ export class SkSidebarMenu {
     /** Applies exit animation classes while closing */
     @State() isClosing: boolean = false;
 
+    @State() dragOffset: number = 0;
+    @State() isDragging: boolean = false;
+
+    private overlayEl?: HTMLElement;
+    private panelEl?: HTMLElement;
     private closeTimer?: ReturnType<typeof setTimeout>;
+    private touchStartX = 0;
+    private touchStartY = 0;
+    private touchStartTime = 0;
+    private swipeLocked: 'horizontal' | 'vertical' | null = null;
 
     componentWillLoad() {
         if (this.open) {
             this.isRendered = true;
+        }
+    }
+
+    componentDidRender() {
+        if (this.isRendered && this.overlayEl) {
+            this.syncTopLayer(true);
+        }
+    }
+
+    private syncTopLayer(show: boolean) {
+        const el = this.overlayEl as
+            | (HTMLElement & {
+                showPopover?: () => void;
+                hidePopover?: () => void;
+            })
+            | undefined;
+
+        if (!el || typeof el.showPopover !== 'function') return;
+
+        try {
+            const isTopLayer = el.matches(':popover-open');
+            if (show && !isTopLayer) {
+                el.showPopover();
+            } else if (!show && isTopLayer) {
+                el.hidePopover();
+            }
+        } catch {
+            // Ignore if element is already disconnected or in a non-browser test env
         }
     }
 
@@ -114,6 +143,7 @@ export class SkSidebarMenu {
 
             this.closeTimer = setTimeout(
                 () => {
+                    this.syncTopLayer(false);
                     this.isRendered = false;
                     this.isClosing = false;
                     this.closeTimer = undefined;
@@ -127,6 +157,7 @@ export class SkSidebarMenu {
         if (this.closeTimer) {
             clearTimeout(this.closeTimer);
         }
+        this.syncTopLayer(false);
         if (typeof document !== 'undefined') {
             document.body.style.overflow = '';
         }
@@ -183,18 +214,16 @@ export class SkSidebarMenu {
 
         const panelWidth = this.panelEl?.offsetWidth || 320;
         const elapsed = Math.max(Date.now() - this.touchStartTime, 1);
-        const velocity = Math.abs(this.dragOffset) / elapsed; // px per ms
+        const velocity = Math.abs(this.dragOffset) / elapsed;
 
         const shouldClose = Math.abs(this.dragOffset) > panelWidth * 0.3 || velocity > 0.5;
 
         this.isDragging = false;
         this.swipeLocked = null;
+        this.dragOffset = 0;
 
         if (shouldClose) {
-            this.dragOffset = 0;
             this.setOpen(false);
-        } else {
-            this.dragOffset = 0;
         }
     };
 
@@ -271,13 +300,19 @@ export class SkSidebarMenu {
                     </slot>
                 )}
 
-                {/* {this.open && ( */}
                 {this.isRendered && (
-                    <div class="fixed inset-0 z-50" role="dialog" aria-modal="true" aria-label={this.brandTitle}>
+                    <div
+                        ref={(el) => (this.overlayEl = el)}
+                        popover="manual"
+                        class="sk-overlay"
+                        role="dialog"
+                        aria-modal="true"
+                        aria-label={this.brandTitle}
+                    >
                         {/* Backdrop */}
                         <div
                             part="backdrop"
-                            class={`fixed inset-0 backdrop-blur-sm ${this.isClosing ? 'sk-backdrop-out' : 'sk-backdrop-in'
+                            class={`sk-backdrop backdrop-blur-sm ${this.isClosing ? 'sk-backdrop-out' : 'sk-backdrop-in'
                                 }`}
                             style={{ background: 'var(--sk-sidebar-backdrop)' }}
                             onClick={() => this.setOpen(false)}
@@ -287,7 +322,7 @@ export class SkSidebarMenu {
                         <aside
                             ref={(el) => (this.panelEl = el)}
                             part="panel"
-                            class={`sk-panel fixed inset-y-0 z-10 flex w-full flex-col shadow-2xl ${this.placement === 'left' ? 'left-0' : 'right-0'
+                            class={`sk-panel z-10 flex w-full flex-col shadow-2xl ${this.placement === 'left' ? 'left-0' : 'right-0'
                                 } ${this.isDragging
                                     ? 'sk-panel-dragging'
                                     : this.isClosing
@@ -339,7 +374,7 @@ export class SkSidebarMenu {
                             </header>
 
                             {/* Main Scrollable Content */}
-                            <div part="body" class="flex-1 overflow-y-auto px-6 py-8">
+                            <div part="body" class="sk-body flex-1 overflow-y-auto px-6 py-8">
                                 {this.sectionLabel && (
                                     <p class="sk-muted mb-8 text-[11px] font-semibold uppercase tracking-[0.14em] text-left">
                                         {this.sectionLabel}
@@ -356,7 +391,8 @@ export class SkSidebarMenu {
                                             const commonProps = {
                                                 key: item.id,
                                                 part: 'item',
-                                                class: `sk-item ${isEditorial ? 'sk-item-editorial py-4' : 'sk-item-compact'} group flex w-full items-center justify-between gap-4 text-left`,
+                                                class: `sk-item ${isEditorial ? 'sk-item-editorial py-4' : 'sk-item-compact'
+                                                    } group flex w-full items-center justify-between gap-4 text-left`,
                                                 style: { animationDelay: `${80 + index * 60}ms` },
                                                 'aria-busy': item.busy ? 'true' : undefined,
                                                 onClick: (ev: MouseEvent) => this.handleItemClick(item, ev),
@@ -418,7 +454,6 @@ export class SkSidebarMenu {
                         </aside>
                     </div>
                 )}
-                {/* )} */}
             </Host>
         );
     }

@@ -5,9 +5,42 @@
  * It contains typing information for all components that exist in this project.
  */
 import { HTMLStencilElement, JSXBase } from "@stencil/core/internal";
+import { SkDockItem } from "./components/sk-bottom-dock/sk-bottom-dock";
 import { SkSidebarMenuItem } from "./components/sk-sidebar-menu/sk-sidebar-menu";
+export { SkDockItem } from "./components/sk-bottom-dock/sk-bottom-dock";
 export { SkSidebarMenuItem } from "./components/sk-sidebar-menu/sk-sidebar-menu";
 export namespace Components {
+    interface SkBottomDock {
+        /**
+          * ID of the currently active tab
+         */
+        "activeId"?: string;
+        /**
+          * Fixes the dock to the bottom of the viewport with safe-area padding
+          * @default true
+         */
+        "floating": boolean;
+        /**
+          * Navigation items to render in the dock
+          * @default []
+         */
+        "items": SkDockItem[];
+        /**
+          * Accessible label for the <nav> landmark
+          * @default 'Main navigation'
+         */
+        "navLabel": string;
+        /**
+          * Prevents default <a> navigation so SPA routers (Angular/Next.js) handle routing
+          * @default true
+         */
+        "preventNavigation": boolean;
+        /**
+          * Color theme: 'dark', 'light', or 'auto' (follows system preference)
+          * @default 'auto'
+         */
+        "theme": 'dark' | 'light' | 'auto';
+    }
     interface SkSidebarMenu {
         /**
           * Optional accent character after brandTitle (e.g. ".")
@@ -70,11 +103,32 @@ export namespace Components {
         "variant": 'compact' | 'editorial';
     }
 }
+export interface SkBottomDockCustomEvent<T> extends CustomEvent<T> {
+    detail: T;
+    target: HTMLSkBottomDockElement;
+}
 export interface SkSidebarMenuCustomEvent<T> extends CustomEvent<T> {
     detail: T;
     target: HTMLSkSidebarMenuElement;
 }
 declare global {
+    interface HTMLSkBottomDockElementEventMap {
+        "skTabSelect": SkDockItem;
+    }
+    interface HTMLSkBottomDockElement extends Components.SkBottomDock, HTMLStencilElement {
+        addEventListener<K extends keyof HTMLSkBottomDockElementEventMap>(type: K, listener: (this: HTMLSkBottomDockElement, ev: SkBottomDockCustomEvent<HTMLSkBottomDockElementEventMap[K]>) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | AddEventListenerOptions): void;
+        removeEventListener<K extends keyof HTMLSkBottomDockElementEventMap>(type: K, listener: (this: HTMLSkBottomDockElement, ev: SkBottomDockCustomEvent<HTMLSkBottomDockElementEventMap[K]>) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | EventListenerOptions): void;
+    }
+    var HTMLSkBottomDockElement: {
+        prototype: HTMLSkBottomDockElement;
+        new (): HTMLSkBottomDockElement;
+    };
     interface HTMLSkSidebarMenuElementEventMap {
         "skOpenChange": boolean;
         "skItemSelect": SkSidebarMenuItem;
@@ -94,10 +148,46 @@ declare global {
         new (): HTMLSkSidebarMenuElement;
     };
     interface HTMLElementTagNameMap {
+        "sk-bottom-dock": HTMLSkBottomDockElement;
         "sk-sidebar-menu": HTMLSkSidebarMenuElement;
     }
 }
 declare namespace LocalJSX {
+    interface SkBottomDock {
+        /**
+          * ID of the currently active tab
+         */
+        "activeId"?: string;
+        /**
+          * Fixes the dock to the bottom of the viewport with safe-area padding
+          * @default true
+         */
+        "floating"?: boolean;
+        /**
+          * Navigation items to render in the dock
+          * @default []
+         */
+        "items"?: SkDockItem[];
+        /**
+          * Accessible label for the <nav> landmark
+          * @default 'Main navigation'
+         */
+        "navLabel"?: string;
+        /**
+          * Emitted when a tab is selected
+         */
+        "onSkTabSelect"?: (event: SkBottomDockCustomEvent<SkDockItem>) => void;
+        /**
+          * Prevents default <a> navigation so SPA routers (Angular/Next.js) handle routing
+          * @default true
+         */
+        "preventNavigation"?: boolean;
+        /**
+          * Color theme: 'dark', 'light', or 'auto' (follows system preference)
+          * @default 'auto'
+         */
+        "theme"?: 'dark' | 'light' | 'auto';
+    }
     interface SkSidebarMenu {
         /**
           * Optional accent character after brandTitle (e.g. ".")
@@ -168,6 +258,13 @@ declare namespace LocalJSX {
         "variant"?: 'compact' | 'editorial';
     }
 
+    interface SkBottomDockAttributes {
+        "theme": 'dark' | 'light' | 'auto';
+        "activeId": string;
+        "navLabel": string;
+        "floating": boolean;
+        "preventNavigation": boolean;
+    }
     interface SkSidebarMenuAttributes {
         "swipeToClose": boolean;
         "theme": 'dark' | 'light' | 'auto';
@@ -183,6 +280,7 @@ declare namespace LocalJSX {
     }
 
     interface IntrinsicElements {
+        "sk-bottom-dock": Omit<SkBottomDock, keyof SkBottomDockAttributes> & { [K in keyof SkBottomDock & keyof SkBottomDockAttributes]?: SkBottomDock[K] } & { [K in keyof SkBottomDock & keyof SkBottomDockAttributes as `attr:${K}`]?: SkBottomDockAttributes[K] } & { [K in keyof SkBottomDock & keyof SkBottomDockAttributes as `prop:${K}`]?: SkBottomDock[K] };
         "sk-sidebar-menu": Omit<SkSidebarMenu, keyof SkSidebarMenuAttributes> & { [K in keyof SkSidebarMenu & keyof SkSidebarMenuAttributes]?: SkSidebarMenu[K] } & { [K in keyof SkSidebarMenu & keyof SkSidebarMenuAttributes as `attr:${K}`]?: SkSidebarMenuAttributes[K] } & { [K in keyof SkSidebarMenu & keyof SkSidebarMenuAttributes as `prop:${K}`]?: SkSidebarMenu[K] };
     }
 }
@@ -190,6 +288,7 @@ export { LocalJSX as JSX };
 declare module "@stencil/core" {
     export namespace JSX {
         interface IntrinsicElements {
+            "sk-bottom-dock": LocalJSX.IntrinsicElements["sk-bottom-dock"] & JSXBase.HTMLAttributes<HTMLSkBottomDockElement>;
             "sk-sidebar-menu": LocalJSX.IntrinsicElements["sk-sidebar-menu"] & JSXBase.HTMLAttributes<HTMLSkSidebarMenuElement>;
         }
     }

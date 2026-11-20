@@ -1,6 +1,6 @@
 {
   "name": "@seakh/ui-react",
-  "version": "0.0.1",
+  "version": "0.0.7",
   "description": "React components for Sk Masum",
   "homepage": "",
   "license": "ISC",
@@ -14,18 +14,19 @@
   },
   "files": [
     "dist"
-  ],  
+  ],
   "publishConfig": {
     "access": "public"
   },
   "dependencies": {
     "@stencil/react-output-target": "^1.5.1",
-    "@seakh/ui-core": "^0.0.3"
+    "@seakh/ui-core": "^0.0.7"
   },
   "scripts": {
     "test": "node ./__tests__/react-library.test.js",
     "build": "npm run tsc",
-    "tsc": "tsc -p . --outDir ./dist"
+    "tsc": "tsc -p . --outDir ./dist",
+    "watch": "tsc --watch"
   },
   "devDependencies": {
     "typescript": "^5.9.3"

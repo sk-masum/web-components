@@ -11,9 +11,21 @@ import type { EventName, StencilReactComponent } from '@stencil/react-output-tar
 import { createComponent } from '@stencil/react-output-target/runtime';
 import React from 'react';
 
-import { type SkSidebarMenuCustomEvent, type SkSidebarMenuItem } from "@seakh/ui-core";
+import { type SkBottomDockCustomEvent, type SkDockItem, type SkSidebarMenuCustomEvent, type SkSidebarMenuItem } from "@seakh/ui-core";
 import type { JSX } from "@seakh/ui-core/dist/components";
+import { SkBottomDock as SkBottomDockElement, defineCustomElement as defineSkBottomDock } from "@seakh/ui-core/dist/components/sk-bottom-dock.js";
 import { SkSidebarMenu as SkSidebarMenuElement, defineCustomElement as defineSkSidebarMenu } from "@seakh/ui-core/dist/components/sk-sidebar-menu.js";
+
+export type SkBottomDockEvents = { onSkTabSelect: EventName<SkBottomDockCustomEvent<SkDockItem>> };
+
+export const SkBottomDock: StencilReactComponent<SkBottomDockElement, SkBottomDockEvents, JSX.SkBottomDock> = /*@__PURE__*/ createComponent<SkBottomDockElement, SkBottomDockEvents, JSX.SkBottomDock>({
+    tagName: 'sk-bottom-dock',
+    elementClass: SkBottomDockElement,
+    // @ts-ignore - ignore potential React type mismatches between the Stencil Output Target and your project.
+    react: React,
+    events: { onSkTabSelect: 'skTabSelect' } as SkBottomDockEvents,
+    defineCustomElement: defineSkBottomDock
+});
 
 export type SkSidebarMenuEvents = {
     onSkOpenChange: EventName<SkSidebarMenuCustomEvent<boolean>>,

@@ -1,14 +1,52 @@
 :root {
-  --sk-primary: #2563eb;
-  --sk-primary-hover: #1d4ed8;
-  --sk-surface: #ffffff;
-  --sk-border: #e2e8f0;
-  --sk-text: #0f172a;
-  --sk-radius: 0.75rem;
-}
+  --sk-sidebar-bg: rgba(11, 15, 20, 0.68);
+  --sk-sidebar-blur: 20px;
+  --sk-sidebar-saturate: 160%;
+  --sk-sidebar-text: #f5f5f5;
+  --sk-sidebar-muted: #a3b8b0;
+  --sk-sidebar-accent: #6ee7b7;
+  --sk-sidebar-border: rgba(255, 255, 255, 0.14);
+  --sk-sidebar-glass-edge: rgba(255, 255, 255, 0.18);
+  --sk-sidebar-trigger-bg: rgba(255, 255, 255, 0.06);
+  --sk-sidebar-hover-bg: rgba(255, 255, 255, 0.1);
+  --sk-sidebar-backdrop: rgba(0, 0, 0, 0.35);
+  --sk-sidebar-max-width: 24rem;
+  /* Sidebar Menu Tokens */
+  --sk-sidebar-bg: rgba(11, 15, 20, 0.68);
+  --sk-sidebar-blur: 20px;
+  --sk-sidebar-saturate: 160%;
+  --sk-sidebar-text: #f5f5f5;
+  --sk-sidebar-muted: #a3b8b0;
+  --sk-sidebar-accent: #6ee7b7;
+  --sk-sidebar-border: rgba(255, 255, 255, 0.14);
+  --sk-sidebar-glass-edge: rgba(255, 255, 255, 0.18);
+  --sk-sidebar-trigger-bg: rgba(255, 255, 255, 0.06);
+  --sk-sidebar-hover-bg: rgba(255, 255, 255, 0.1);
+  --sk-sidebar-backdrop: rgba(0, 0, 0, 0.35);
+  --sk-sidebar-max-width: 24rem;
 
-.dark {
-  --sk-surface: #0f172a;
-  --sk-border: #1e293b;
-  --sk-text: #f8fafc;
+  /* Bottom Dock Tokens */
+  --sk-dock-z-index: 50;
+  --sk-dock-max-width: 430px;
+  --sk-dock-height: auto;
+  --sk-dock-gap: 12px;
+  --sk-dock-safe-right: env(safe-area-inset-right, 0px);
+  --sk-dock-safe-bottom: max(12px, env(safe-area-inset-bottom, 0px));
+  --sk-dock-safe-left: env(safe-area-inset-left, 0px);
+  --sk-dock-bg-fallback: rgba(38, 38, 38, 0.96);
+  --sk-dock-bg-solid: #262626;
+  --sk-dock-bg-glass: rgba(30, 30, 30, 0.6);
+  --sk-dock-sheen-start: rgba(255, 255, 255, 0.12);
+  --sk-dock-sheen-end: rgba(255, 255, 255, 0.02);
+  --sk-dock-blur: 24px;
+  --sk-dock-saturate: 180%;
+  --sk-dock-border: rgba(255, 255, 255, 0.18);
+  --sk-dock-glass-edge: rgba(255, 255, 255, 0.12);
+  --sk-dock-shadow: 0 12px 32px rgba(0, 0, 0, 0.32);
+  --sk-dock-text: #f5f5f5;
+  --sk-dock-muted: #d4d4d4;
+  --sk-dock-accent: #6ee7b7;
+  --sk-dock-active-bg: rgba(110, 231, 183, 0.13);
+  --sk-dock-active-ring: rgba(110, 231, 183, 0.18);
+  --sk-dock-hover-bg: rgba(255, 255, 255, 0.1);
 }

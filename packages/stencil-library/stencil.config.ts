@@ -6,11 +6,17 @@ import tailwind, { tailwindHMR } from 'stencil-tailwind-plugin';
 export const config: Config = {
   namespace: 'stencil-library',
   globalStyle: 'src/styles/theme.css',
-  plugins: [tailwind(), tailwindHMR()],
+  plugins: [tailwind({
+    tailwindCssPath: './src/styles/tailwind.css',
+    enableDebug: false,
+  }), tailwindHMR()],
   outputTargets: [
     {
       type: 'dist',
       esmLoaderPath: '../loader',
+      copy: [
+        { src: 'styles/theme.css', dest: 'theme.css' },
+      ],
     },
     {
       type: 'dist-custom-elements',

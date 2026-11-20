@@ -1,0 +1,152 @@
+:host {
+    display: block;
+    font-family: var(--sk-dock-font-family, inherit);
+  
+    /* Layout & Safe-Area Tokens */
+    --sk-dock-z-index: 50;
+    --sk-dock-max-width: 430px;
+    --sk-dock-height: auto;
+    --sk-dock-gap: 12px;
+    --sk-dock-safe-right: env(safe-area-inset-right, 0px);
+    --sk-dock-safe-bottom: max(12px, env(safe-area-inset-bottom, 0px));
+    --sk-dock-safe-left: env(safe-area-inset-left, 0px);
+  
+    /* Default (Dark Glass) Tokens */
+    --sk-dock-bg-fallback: rgba(38, 38, 38, 0.96);
+    --sk-dock-bg-solid: #262626;
+    --sk-dock-bg-glass: rgba(30, 30, 30, 0.6);
+    --sk-dock-sheen-start: rgba(255, 255, 255, 0.12);
+    --sk-dock-sheen-end: rgba(255, 255, 255, 0.02);
+    --sk-dock-blur: 24px;
+    --sk-dock-saturate: 180%;
+    --sk-dock-border: rgba(255, 255, 255, 0.18);
+    --sk-dock-glass-edge: rgba(255, 255, 255, 0.12);
+    --sk-dock-shadow: 0 12px 32px rgba(0, 0, 0, 0.32);
+  
+    --sk-dock-text: #f5f5f5;
+    --sk-dock-muted: #d4d4d4;
+    --sk-dock-accent: #6ee7b7;
+    --sk-dock-active-bg: rgba(110, 231, 183, 0.13);
+    --sk-dock-active-ring: rgba(110, 231, 183, 0.18);
+    --sk-dock-hover-bg: rgba(255, 255, 255, 0.1);
+  }
+  
+  :host([theme='light']) {
+    --sk-dock-bg-fallback: rgba(248, 250, 252, 0.96);
+    --sk-dock-bg-solid: #f8fafc;
+    --sk-dock-bg-glass: rgba(255, 255, 255, 0.72);
+    --sk-dock-sheen-start: rgba(255, 255, 255, 0.55);
+    --sk-dock-sheen-end: rgba(255, 255, 255, 0.15);
+    --sk-dock-border: rgba(15, 23, 42, 0.12);
+    --sk-dock-glass-edge: rgba(255, 255, 255, 0.75);
+    --sk-dock-shadow: 0 12px 32px rgba(15, 23, 42, 0.14);
+  
+    --sk-dock-text: #0f172a;
+    --sk-dock-muted: #475569;
+    --sk-dock-accent: #059669;
+    --sk-dock-active-bg: rgba(5, 150, 105, 0.12);
+    --sk-dock-active-ring: rgba(5, 150, 105, 0.2);
+    --sk-dock-hover-bg: rgba(15, 23, 42, 0.06);
+  }
+  
+  @media (prefers-color-scheme: light) {
+    :host([theme='auto']) {
+      --sk-dock-bg-fallback: rgba(248, 250, 252, 0.96);
+      --sk-dock-bg-solid: #f8fafc;
+      --sk-dock-bg-glass: rgba(255, 255, 255, 0.72);
+      --sk-dock-sheen-start: rgba(255, 255, 255, 0.55);
+      --sk-dock-sheen-end: rgba(255, 255, 255, 0.15);
+      --sk-dock-border: rgba(15, 23, 42, 0.12);
+      --sk-dock-glass-edge: rgba(255, 255, 255, 0.75);
+      --sk-dock-shadow: 0 12px 32px rgba(15, 23, 42, 0.14);
+  
+      --sk-dock-text: #0f172a;
+      --sk-dock-muted: #475569;
+      --sk-dock-accent: #059669;
+      --sk-dock-active-bg: rgba(5, 150, 105, 0.12);
+      --sk-dock-active-ring: rgba(5, 150, 105, 0.2);
+      --sk-dock-hover-bg: rgba(15, 23, 42, 0.06);
+    }
+  }
+  
+  .sk-safe-nav {
+    z-index: var(--sk-dock-z-index);
+    padding: var(--sk-dock-gap) calc(16px + var(--sk-dock-safe-right))
+      var(--sk-dock-safe-bottom) calc(16px + var(--sk-dock-safe-left));
+  }
+  
+  .sk-glass-dock {
+    max-width: var(--sk-dock-max-width);
+    height: var(--sk-dock-height);
+    border: 1px solid var(--sk-dock-border);
+    background: var(--sk-dock-bg-fallback);
+    box-shadow:
+      var(--sk-dock-shadow),
+      inset 0 1px 0 var(--sk-dock-glass-edge);
+  }
+  
+  @supports (
+    (-webkit-backdrop-filter: blur(1px)) or (backdrop-filter: blur(1px))
+  ) {
+    .sk-glass-dock {
+      background:
+        linear-gradient(
+          160deg,
+          var(--sk-dock-sheen-start),
+          var(--sk-dock-sheen-end)
+        ),
+        var(--sk-dock-bg-glass);
+      -webkit-backdrop-filter: blur(var(--sk-dock-blur))
+        saturate(var(--sk-dock-saturate));
+      backdrop-filter: blur(var(--sk-dock-blur))
+        saturate(var(--sk-dock-saturate));
+    }
+  }
+  
+  .sk-dock-tab {
+    color: var(--sk-dock-muted);
+    -webkit-tap-highlight-color: transparent;
+  }
+  
+  .sk-dock-tab.is-active {
+    color: var(--sk-dock-accent);
+    background-color: var(--sk-dock-active-bg);
+    box-shadow: inset 0 0 0 1px var(--sk-dock-active-ring);
+  }
+  
+  @media (hover: hover) {
+    .sk-dock-tab:hover:not(:disabled):not([aria-disabled='true']) {
+      color: var(--sk-dock-text);
+      background-color: var(--sk-dock-hover-bg);
+    }
+  }
+  
+  .sk-dock-tab:focus-visible {
+    outline: 2px solid var(--sk-dock-accent);
+    outline-offset: -2px;
+  }
+  
+  .sk-dock-tab:disabled,
+  .sk-dock-tab[aria-disabled='true'] {
+    opacity: 0.45;
+    cursor: not-allowed;
+  }
+  
+  .sk-dock-badge {
+    background: var(--sk-dock-accent);
+    color: #0b0f14;
+  }
+  
+  @media (prefers-reduced-motion: reduce) {
+    .sk-dock-tab {
+      transition: none;
+    }
+  }
+  
+  @media (prefers-reduced-transparency: reduce) {
+    .sk-glass-dock {
+      background: var(--sk-dock-bg-solid);
+      -webkit-backdrop-filter: none;
+      backdrop-filter: none;
+    }
+  }
