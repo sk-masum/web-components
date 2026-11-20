@@ -1,0 +1,14 @@
+:root {
+  --sk-primary: #2563eb;
+  --sk-primary-hover: #1d4ed8;
+  --sk-surface: #ffffff;
+  --sk-border: #e2e8f0;
+  --sk-text: #0f172a;
+  --sk-radius: 0.75rem;
+}
+
+.dark {
+  --sk-surface: #0f172a;
+  --sk-border: #1e293b;
+  --sk-text: #f8fafc;
+}

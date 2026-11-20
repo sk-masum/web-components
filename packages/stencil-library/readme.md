@@ -41,6 +41,10 @@ npm test
 
 Need help? Check out our docs [here](https://stenciljs.com/docs/my-first-component).
 
+## Tailwind styles
+
+Use Tailwind utility classes in component TSX. `stencil-tailwind-plugin` generates the utility CSS for each component. Do not add `@import 'tailwindcss'` to component stylesheets or `src/styles/theme.css`: Stencil tries to resolve plain CSS imports before the plugin runs. Keep the global theme stylesheet for shared CSS variables.
+
 ## Naming Components
 
 When creating new component tags, we recommend _not_ using `stencil` in the component name (ex: `<stencil-datepicker>`). This is because the generated component has little to nothing to do with Stencil; it's just a web component!

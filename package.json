@@ -1,5 +1,5 @@
 {
-  "name": "root",
+  "name": "seakh-ui",
   "private": true,
   "workspaces": [
     "packages/*",
@@ -18,7 +18,14 @@
     "dev:app": "npm run dev --workspace=app",
     "watch:stencil-to-react": "chokidar \"packages/stencil-library/dist/**/*\" -c \"npm run build --workspace=packages/react-library\"",
     "watch:react-to-app": "chokidar \"packages/react-library/dist/**/*\" -c \"npm run build --workspace=app\"",
-    "dev:all": "concurrently -k -n stencil,react,app,watch-sr,watch-ra -c blue,green,magenta,yellow,cyan \"npm run dev:stencil\" \"npm run dev:react\" \"npm run dev:app\" \"npm run watch:stencil-to-react\" \"npm run watch:react-to-app\""
+    "dev:all": "concurrently -k -n stencil,react,app,watch-sr,watch-ra -c blue,green,magenta,yellow,cyan \"npm run dev:stencil\" \"npm run dev:react\" \"npm run dev:app\" \"npm run watch:stencil-to-react\" \"npm run watch:react-to-app\"",
+    "build:angular": "npm run build --workspace=packages/angular-library",
+    "watch:stencil-to-angular": "chokidar \"packages/stencil-library/dist/**/*\" -c \"npm run build --workspace=packages/angular-library\"",
+    "build:all": "npm run build --workspace=packages/stencil-library && npm run build --workspace=packages/react-library && npm run build --workspace=packages/angular-library",
+    "release:dry": "node scripts/release.mjs patch --dry-run",
+    "release:patch": "node scripts/release.mjs patch",
+    "release:minor": "node scripts/release.mjs minor",
+    "release:major": "node scripts/release.mjs major"
   },
   "exports": {
     ".": {

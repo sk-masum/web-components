@@ -1,13 +1,6 @@
 import './App.css';
-import { MyComponent, SkButton } from 'react-library';
+import { SidebarTest } from './SidebarTest';
 
-function App() {
-  return (
-    <div className="App">
-      <MyComponent first="Sk" last="Masum" />
-      <SkButton label="Click Me" type="button" disabled={false} />
-    </div>
-  );
+export default function App() {
+  return <SidebarTest />;
 }
-
-export default App;

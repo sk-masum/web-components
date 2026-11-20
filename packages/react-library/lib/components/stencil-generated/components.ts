@@ -11,29 +11,23 @@ import type { EventName, StencilReactComponent } from '@stencil/react-output-tar
 import { createComponent } from '@stencil/react-output-target/runtime';
 import React from 'react';
 
-import { type SkButtonCustomEvent } from "stencil-library";
-import type { JSX } from "stencil-library/dist/components";
-import { MyComponent as MyComponentElement, defineCustomElement as defineMyComponent } from "stencil-library";
-import { SkButton as SkButtonElement, defineCustomElement as defineSkButton } from "stencil-library";
+import { type SkSidebarMenuCustomEvent, type SkSidebarMenuItem } from "@seakh/ui-core";
+import type { JSX } from "@seakh/ui-core/dist/components";
+import { SkSidebarMenu as SkSidebarMenuElement, defineCustomElement as defineSkSidebarMenu } from "@seakh/ui-core/dist/components/sk-sidebar-menu.js";
 
-export type MyComponentEvents = NonNullable<unknown>;
+export type SkSidebarMenuEvents = {
+    onSkOpenChange: EventName<SkSidebarMenuCustomEvent<boolean>>,
+    onSkItemSelect: EventName<SkSidebarMenuCustomEvent<SkSidebarMenuItem>>
+};
 
-export const MyComponent: StencilReactComponent<MyComponentElement, MyComponentEvents, JSX.MyComponent> = /*@__PURE__*/ createComponent<MyComponentElement, MyComponentEvents, JSX.MyComponent>({
-    tagName: 'my-component',
-    elementClass: MyComponentElement,
+export const SkSidebarMenu: StencilReactComponent<SkSidebarMenuElement, SkSidebarMenuEvents, JSX.SkSidebarMenu> = /*@__PURE__*/ createComponent<SkSidebarMenuElement, SkSidebarMenuEvents, JSX.SkSidebarMenu>({
+    tagName: 'sk-sidebar-menu',
+    elementClass: SkSidebarMenuElement,
     // @ts-ignore - ignore potential React type mismatches between the Stencil Output Target and your project.
     react: React,
-    events: {} as MyComponentEvents,
-    defineCustomElement: defineMyComponent
-});
-
-export type SkButtonEvents = { onSkClick: EventName<SkButtonCustomEvent<MouseEvent>> };
-
-export const SkButton: StencilReactComponent<SkButtonElement, SkButtonEvents, JSX.SkButton> = /*@__PURE__*/ createComponent<SkButtonElement, SkButtonEvents, JSX.SkButton>({
-    tagName: 'sk-button',
-    elementClass: SkButtonElement,
-    // @ts-ignore - ignore potential React type mismatches between the Stencil Output Target and your project.
-    react: React,
-    events: { onSkClick: 'skClick' } as SkButtonEvents,
-    defineCustomElement: defineSkButton
+    events: {
+        onSkOpenChange: 'skOpenChange',
+        onSkItemSelect: 'skItemSelect'
+    } as SkSidebarMenuEvents,
+    defineCustomElement: defineSkSidebarMenu
 });

@@ -5,131 +5,192 @@
  * It contains typing information for all components that exist in this project.
  */
 import { HTMLStencilElement, JSXBase } from "@stencil/core/internal";
+import { SkSidebarMenuItem } from "./components/sk-sidebar-menu/sk-sidebar-menu";
+export { SkSidebarMenuItem } from "./components/sk-sidebar-menu/sk-sidebar-menu";
 export namespace Components {
-    interface MyComponent {
+    interface SkSidebarMenu {
         /**
-          * The first name
+          * Optional accent character after brandTitle (e.g. ".")
+          * @default '.'
          */
-        "first"?: string;
+        "brandAccent": string;
         /**
-          * The last name
+          * Subtitle displayed under the brand title
          */
-        "last"?: string;
+        "brandSubtitle"?: string;
         /**
-          * The middle name
+          * Brand title displayed in the header
+          * @default 'Workspace'
          */
-        "middle"?: string;
-    }
-    interface SkButton {
+        "brandTitle": string;
         /**
-          * Disabled state
+          * Automatically close the drawer when an item is selected
+          * @default true
+         */
+        "closeOnSelect": boolean;
+        /**
+          * Navigation items array (optional if using default slot)
+          * @default []
+         */
+        "items": SkSidebarMenuItem[];
+        /**
+          * Controls drawer visibility (supports both controlled and internal trigger toggle)
           * @default false
          */
-        "disabled": boolean;
+        "open": boolean;
         /**
-          * Button label
-          * @default 'Button'
+          * Side of the screen the drawer slides from
+          * @default 'right'
          */
-        "label": string;
+        "placement": 'right' | 'left';
         /**
-          * Button type
-          * @default 'button'
+          * Section caption above the navigation items
+          * @default 'Manage your workspace'
          */
-        "type": 'button' | 'submit' | 'reset';
+        "sectionLabel": string;
+        /**
+          * Renders the built-in hamburger trigger button
+          * @default true
+         */
+        "showTrigger": boolean;
+        /**
+          * Enable horizontal swipe-to-close gesture on touch devices
+          * @default true
+         */
+        "swipeToClose": boolean;
+        /**
+          * Color theme: 'dark', 'light', or 'auto' (follows system preference)
+          * @default 'auto'
+         */
+        "theme": 'dark' | 'light' | 'auto';
+        /**
+          * Visual style: 'compact' (icon + medium text) or 'editorial' (large display text)
+          * @default 'compact'
+         */
+        "variant": 'compact' | 'editorial';
     }
 }
-export interface SkButtonCustomEvent<T> extends CustomEvent<T> {
+export interface SkSidebarMenuCustomEvent<T> extends CustomEvent<T> {
     detail: T;
-    target: HTMLSkButtonElement;
+    target: HTMLSkSidebarMenuElement;
 }
 declare global {
-    interface HTMLMyComponentElement extends Components.MyComponent, HTMLStencilElement {
+    interface HTMLSkSidebarMenuElementEventMap {
+        "skOpenChange": boolean;
+        "skItemSelect": SkSidebarMenuItem;
     }
-    var HTMLMyComponentElement: {
-        prototype: HTMLMyComponentElement;
-        new (): HTMLMyComponentElement;
-    };
-    interface HTMLSkButtonElementEventMap {
-        "skClick": MouseEvent;
-    }
-    interface HTMLSkButtonElement extends Components.SkButton, HTMLStencilElement {
-        addEventListener<K extends keyof HTMLSkButtonElementEventMap>(type: K, listener: (this: HTMLSkButtonElement, ev: SkButtonCustomEvent<HTMLSkButtonElementEventMap[K]>) => any, options?: boolean | AddEventListenerOptions): void;
+    interface HTMLSkSidebarMenuElement extends Components.SkSidebarMenu, HTMLStencilElement {
+        addEventListener<K extends keyof HTMLSkSidebarMenuElementEventMap>(type: K, listener: (this: HTMLSkSidebarMenuElement, ev: SkSidebarMenuCustomEvent<HTMLSkSidebarMenuElementEventMap[K]>) => any, options?: boolean | AddEventListenerOptions): void;
         addEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
         addEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
         addEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | AddEventListenerOptions): void;
-        removeEventListener<K extends keyof HTMLSkButtonElementEventMap>(type: K, listener: (this: HTMLSkButtonElement, ev: SkButtonCustomEvent<HTMLSkButtonElementEventMap[K]>) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener<K extends keyof HTMLSkSidebarMenuElementEventMap>(type: K, listener: (this: HTMLSkSidebarMenuElement, ev: SkSidebarMenuCustomEvent<HTMLSkSidebarMenuElementEventMap[K]>) => any, options?: boolean | EventListenerOptions): void;
         removeEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
         removeEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
         removeEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | EventListenerOptions): void;
     }
-    var HTMLSkButtonElement: {
-        prototype: HTMLSkButtonElement;
-        new (): HTMLSkButtonElement;
+    var HTMLSkSidebarMenuElement: {
+        prototype: HTMLSkSidebarMenuElement;
+        new (): HTMLSkSidebarMenuElement;
     };
     interface HTMLElementTagNameMap {
-        "my-component": HTMLMyComponentElement;
-        "sk-button": HTMLSkButtonElement;
+        "sk-sidebar-menu": HTMLSkSidebarMenuElement;
     }
 }
 declare namespace LocalJSX {
-    interface MyComponent {
+    interface SkSidebarMenu {
         /**
-          * The first name
+          * Optional accent character after brandTitle (e.g. ".")
+          * @default '.'
          */
-        "first"?: string;
+        "brandAccent"?: string;
         /**
-          * The last name
+          * Subtitle displayed under the brand title
          */
-        "last"?: string;
+        "brandSubtitle"?: string;
         /**
-          * The middle name
+          * Brand title displayed in the header
+          * @default 'Workspace'
          */
-        "middle"?: string;
-    }
-    interface SkButton {
+        "brandTitle"?: string;
         /**
-          * Disabled state
+          * Automatically close the drawer when an item is selected
+          * @default true
+         */
+        "closeOnSelect"?: boolean;
+        /**
+          * Navigation items array (optional if using default slot)
+          * @default []
+         */
+        "items"?: SkSidebarMenuItem[];
+        /**
+          * Emitted when a menu item is clicked
+         */
+        "onSkItemSelect"?: (event: SkSidebarMenuCustomEvent<SkSidebarMenuItem>) => void;
+        /**
+          * Emitted whenever the drawer opens or closes
+         */
+        "onSkOpenChange"?: (event: SkSidebarMenuCustomEvent<boolean>) => void;
+        /**
+          * Controls drawer visibility (supports both controlled and internal trigger toggle)
           * @default false
          */
-        "disabled"?: boolean;
+        "open"?: boolean;
         /**
-          * Button label
-          * @default 'Button'
+          * Side of the screen the drawer slides from
+          * @default 'right'
          */
-        "label"?: string;
+        "placement"?: 'right' | 'left';
         /**
-          * Emits when the button is clicked
+          * Section caption above the navigation items
+          * @default 'Manage your workspace'
          */
-        "onSkClick"?: (event: SkButtonCustomEvent<MouseEvent>) => void;
+        "sectionLabel"?: string;
         /**
-          * Button type
-          * @default 'button'
+          * Renders the built-in hamburger trigger button
+          * @default true
          */
-        "type"?: 'button' | 'submit' | 'reset';
+        "showTrigger"?: boolean;
+        /**
+          * Enable horizontal swipe-to-close gesture on touch devices
+          * @default true
+         */
+        "swipeToClose"?: boolean;
+        /**
+          * Color theme: 'dark', 'light', or 'auto' (follows system preference)
+          * @default 'auto'
+         */
+        "theme"?: 'dark' | 'light' | 'auto';
+        /**
+          * Visual style: 'compact' (icon + medium text) or 'editorial' (large display text)
+          * @default 'compact'
+         */
+        "variant"?: 'compact' | 'editorial';
     }
 
-    interface MyComponentAttributes {
-        "first": string;
-        "middle": string;
-        "last": string;
-    }
-    interface SkButtonAttributes {
-        "label": string;
-        "type": 'button' | 'submit' | 'reset';
-        "disabled": boolean;
+    interface SkSidebarMenuAttributes {
+        "swipeToClose": boolean;
+        "theme": 'dark' | 'light' | 'auto';
+        "placement": 'right' | 'left';
+        "open": boolean;
+        "showTrigger": boolean;
+        "brandTitle": string;
+        "brandAccent": string;
+        "brandSubtitle": string;
+        "sectionLabel": string;
+        "variant": 'compact' | 'editorial';
+        "closeOnSelect": boolean;
     }
 
     interface IntrinsicElements {
-        "my-component": Omit<MyComponent, keyof MyComponentAttributes> & { [K in keyof MyComponent & keyof MyComponentAttributes]?: MyComponent[K] } & { [K in keyof MyComponent & keyof MyComponentAttributes as `attr:${K}`]?: MyComponentAttributes[K] } & { [K in keyof MyComponent & keyof MyComponentAttributes as `prop:${K}`]?: MyComponent[K] };
-        "sk-button": Omit<SkButton, keyof SkButtonAttributes> & { [K in keyof SkButton & keyof SkButtonAttributes]?: SkButton[K] } & { [K in keyof SkButton & keyof SkButtonAttributes as `attr:${K}`]?: SkButtonAttributes[K] } & { [K in keyof SkButton & keyof SkButtonAttributes as `prop:${K}`]?: SkButton[K] };
+        "sk-sidebar-menu": Omit<SkSidebarMenu, keyof SkSidebarMenuAttributes> & { [K in keyof SkSidebarMenu & keyof SkSidebarMenuAttributes]?: SkSidebarMenu[K] } & { [K in keyof SkSidebarMenu & keyof SkSidebarMenuAttributes as `attr:${K}`]?: SkSidebarMenuAttributes[K] } & { [K in keyof SkSidebarMenu & keyof SkSidebarMenuAttributes as `prop:${K}`]?: SkSidebarMenu[K] };
     }
 }
 export { LocalJSX as JSX };
 declare module "@stencil/core" {
     export namespace JSX {
         interface IntrinsicElements {
-            "my-component": LocalJSX.IntrinsicElements["my-component"] & JSXBase.HTMLAttributes<HTMLMyComponentElement>;
-            "sk-button": LocalJSX.IntrinsicElements["sk-button"] & JSXBase.HTMLAttributes<HTMLSkButtonElement>;
+            "sk-sidebar-menu": LocalJSX.IntrinsicElements["sk-sidebar-menu"] & JSXBase.HTMLAttributes<HTMLSkSidebarMenuElement>;
         }
     }
 }

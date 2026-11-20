@@ -1,10 +1,10 @@
 {
-  "name": "react-library",
-  "version": "0.0.0",
-  "description": "> TODO: description",
+  "name": "@seakh/ui-react",
+  "version": "0.0.1",
+  "description": "React components for Sk Masum",
   "homepage": "",
   "license": "ISC",
-  "author": "seakh-masum <masum0aktar@gmail.com>",
+  "author": "seekh <seakh.masum@zohomail.in>",
   "main": "dist/index.js",
   "module": "dist/index.js",
   "types": "dist/types/index.d.ts",
@@ -14,13 +14,13 @@
   },
   "files": [
     "dist"
-  ],
+  ],  
   "publishConfig": {
     "access": "public"
   },
   "dependencies": {
     "@stencil/react-output-target": "^1.5.1",
-    "stencil-library": "file:../stencil-library"
+    "@seakh/ui-core": "^0.0.3"
   },
   "scripts": {
     "test": "node ./__tests__/react-library.test.js",
