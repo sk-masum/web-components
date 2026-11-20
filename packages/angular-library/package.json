@@ -1,6 +1,6 @@
 {
   "name": "@seakh/ui-angular",
-  "version": "0.0.7",
+  "version": "0.0.8",
   "private": false,
   "description": "Angular components for Sk Masum",
   "homepage": "",
@@ -18,7 +18,7 @@
     "@angular/core": ">=17.0.0"
   },
   "dependencies": {
-    "@seakh/ui-core": "^0.0.7",
+    "@seakh/ui-core": "^0.0.8",
     "tslib": "^2.6.0"
   },
   "devDependencies": {

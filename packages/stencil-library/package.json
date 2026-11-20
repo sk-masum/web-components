@@ -1,6 +1,6 @@
 {
   "name": "@seakh/ui-core",
-  "version": "0.0.7",
+  "version": "0.0.8",
   "description": "Core UI components for Sk Masum",
   "main": "dist/index.cjs.js",
   "module": "dist/index.js",
